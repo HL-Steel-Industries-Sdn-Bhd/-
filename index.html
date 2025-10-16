@@ -3,45 +3,47 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>游戏目录 UI 示例</title>
+<title>波动铁片菜单（双音效版）</title>
 <style>
   body {
-    background: radial-gradient(circle at center, #222, #000);
+    background: radial-gradient(circle at center, #111, #000);
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    font-family: "Orbitron", sans-serif;
+    overflow: hidden;
   }
 
   .menu {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 25px;
   }
 
   .btn {
     color: #fff;
-    font-size: 24px;
-    padding: 20px 60px;
-    text-align: center;
-    border: 2px solid #999;
-    border-radius: 10px;
+    font-size: 26px;
+    padding: 20px 80px;
+    border: 2px solid #888;
+    border-radius: 12px;
     cursor: pointer;
     background: linear-gradient(145deg, #333, #111);
-    box-shadow: 0 0 15px #000 inset, 0 3px 8px rgba(0,0,0,0.5);
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    box-shadow: 0 0 20px #000 inset, 0 5px 10px rgba(0,0,0,0.6);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
   }
 
   .btn:hover {
-    transform: scale(1.1) rotateX(5deg);
-    box-shadow: 0 0 30px rgba(255,255,255,0.3);
-    animation: metalWave 0.3s ease-out;
+    transform: scale(1.1) rotateX(6deg);
+    border-color: #ccc;
+    box-shadow: 0 0 40px rgba(255,255,255,0.3);
+    animation: metalWave 0.4s ease-out;
   }
 
   @keyframes metalWave {
     0% { transform: scale(1.1) rotateX(0deg); }
     25% { transform: scale(1.08) rotateX(8deg); }
-    50% { transform: scale(1.1) rotateX(-5deg); }
+    50% { transform: scale(1.12) rotateX(-6deg); }
     75% { transform: scale(1.09) rotateX(3deg); }
     100% { transform: scale(1.1) rotateX(0deg); }
   }
@@ -49,19 +51,35 @@
 </head>
 <body>
   <div class="menu">
-    <div class="btn" onclick="playSound()">开始游戏</div>
-    <div class="btn" onclick="playSound()">选项设置</div>
-    <div class="btn" onclick="playSound()">退出游戏</div>
+    <div class="btn">开始游戏</div>
+    <div class="btn">选项设置</div>
+    <div class="btn">退出游戏</div>
   </div>
 
-  <audio id="metal-sound" src="https://cdn.pixabay.com/audio/2021/09/06/audio_58cbebdb42.mp3"></audio>
+  <!-- 音效区：拨动 + 点击 -->
+  <audio id="hover-sound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_1b231d9d19.mp3?filename=metal-click-1.mp3"></audio>
+  <audio id="click-sound" src="https://cdn.pixabay.com/download/audio/2021/09/06/audio_58cbebdb42.mp3?filename=metal-hit.mp3"></audio>
 
   <script>
-    function playSound() {
-      const sound = document.getElementById("metal-sound");
-      sound.currentTime = 0;
-      sound.play();
-    }
+    const hoverSound = document.getElementById("hover-sound");
+    const clickSound = document.getElementById("click-sound");
+
+    document.querySelectorAll(".btn").forEach(btn => {
+      // 拨动声
+      btn.addEventListener("mouseenter", () => {
+        hoverSound.currentTime = 0;
+        hoverSound.play();
+      });
+
+      // 成功点击声
+      btn.addEventListener("click", () => {
+        clickSound.currentTime = 0;
+        clickSound.play();
+        btn.style.transform = "scale(0.95)"; // 点击压下感
+        setTimeout(() => btn.style.transform = "scale(1.1)", 150);
+      });
+    });
   </script>
 </body>
 </html>
+
