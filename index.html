@@ -56,31 +56,36 @@
     <div class="btn">退出游戏</div>
   </div>
 
-  <!-- 可外链音源 -->
-  <audio id="hover-sound" src="https://www.orangefreesounds.com/wp-content/uploads/2021/01/Metal-click.mp3"></audio>
-  <audio id="click-sound" src="https://soundbible.com/mp3/Metal_Clang-KevanGC-1239634734.mp3"></audio>
+  <audio id="hover-sound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_1b231d9d19.mp3?filename=metal-click-1.mp3"></audio>
+  <audio id="click-sound" src="https://cdn.pixabay.com/download/audio/2021/09/30/audio_d80b66bcd9.mp3?filename=metal-hit-impact.mp3"></audio>
 
   <script>
     const hoverSound = document.getElementById("hover-sound");
     const clickSound = document.getElementById("click-sound");
 
     let audioEnabled = false;
-    // 首次点击激活声音播放权限
-    document.body.addEventListener("click", () => { audioEnabled = true; });
+
+    // 第一次点击激活音频权限
+    document.body.addEventListener("click", () => {
+      if (!audioEnabled) {
+        audioEnabled = true;
+        hoverSound.play().catch(() => {});
+        hoverSound.pause();
+        hoverSound.currentTime = 0;
+      }
+    });
 
     document.querySelectorAll(".btn").forEach(btn => {
-      // 拨动声（hover）
       btn.addEventListener("mouseenter", () => {
         if (!audioEnabled) return;
         hoverSound.currentTime = 0;
-        hoverSound.play();
+        hoverSound.play().catch(() => {});
       });
 
-      // 点击声（click）
       btn.addEventListener("click", () => {
-        audioEnabled = true;
+        if (!audioEnabled) return;
         clickSound.currentTime = 0;
-        clickSound.play();
+        clickSound.play().catch(() => {});
         btn.style.transform = "scale(0.95)";
         setTimeout(() => btn.style.transform = "scale(1.1)", 150);
       });
@@ -88,5 +93,6 @@
   </script>
 </body>
 </html>
+
 
 
