@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>波动铁片菜单（双音效版）</title>
+<title>波动铁片菜单（可播放版）</title>
 <style>
   body {
     background: radial-gradient(circle at center, #111, #000);
@@ -56,30 +56,37 @@
     <div class="btn">退出游戏</div>
   </div>
 
-  <!-- 音效区：拨动 + 点击 -->
-  <audio id="hover-sound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_1b231d9d19.mp3?filename=metal-click-1.mp3"></audio>
-  <audio id="click-sound" src="https://cdn.pixabay.com/download/audio/2021/09/06/audio_58cbebdb42.mp3?filename=metal-hit.mp3"></audio>
+  <!-- 可外链音源 -->
+  <audio id="hover-sound" src="https://www.orangefreesounds.com/wp-content/uploads/2021/01/Metal-click.mp3"></audio>
+  <audio id="click-sound" src="https://soundbible.com/mp3/Metal_Clang-KevanGC-1239634734.mp3"></audio>
 
   <script>
     const hoverSound = document.getElementById("hover-sound");
     const clickSound = document.getElementById("click-sound");
 
+    let audioEnabled = false;
+    // 首次点击激活声音播放权限
+    document.body.addEventListener("click", () => { audioEnabled = true; });
+
     document.querySelectorAll(".btn").forEach(btn => {
-      // 拨动声
+      // 拨动声（hover）
       btn.addEventListener("mouseenter", () => {
+        if (!audioEnabled) return;
         hoverSound.currentTime = 0;
         hoverSound.play();
       });
 
-      // 成功点击声
+      // 点击声（click）
       btn.addEventListener("click", () => {
+        audioEnabled = true;
         clickSound.currentTime = 0;
         clickSound.play();
-        btn.style.transform = "scale(0.95)"; // 点击压下感
+        btn.style.transform = "scale(0.95)";
         setTimeout(() => btn.style.transform = "scale(1.1)", 150);
       });
     });
   </script>
 </body>
 </html>
+
 
