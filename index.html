@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>游戏目录 UI 示例</title>
+<style>
+  body {
+    background: radial-gradient(circle at center, #222, #000);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .menu {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .btn {
+    color: #fff;
+    font-size: 24px;
+    padding: 20px 60px;
+    text-align: center;
+    border: 2px solid #999;
+    border-radius: 10px;
+    cursor: pointer;
+    background: linear-gradient(145deg, #333, #111);
+    box-shadow: 0 0 15px #000 inset, 0 3px 8px rgba(0,0,0,0.5);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .btn:hover {
+    transform: scale(1.1) rotateX(5deg);
+    box-shadow: 0 0 30px rgba(255,255,255,0.3);
+    animation: metalWave 0.3s ease-out;
+  }
+
+  @keyframes metalWave {
+    0% { transform: scale(1.1) rotateX(0deg); }
+    25% { transform: scale(1.08) rotateX(8deg); }
+    50% { transform: scale(1.1) rotateX(-5deg); }
+    75% { transform: scale(1.09) rotateX(3deg); }
+    100% { transform: scale(1.1) rotateX(0deg); }
+  }
+</style>
+</head>
+<body>
+  <div class="menu">
+    <div class="btn" onclick="playSound()">开始游戏</div>
+    <div class="btn" onclick="playSound()">选项设置</div>
+    <div class="btn" onclick="playSound()">退出游戏</div>
+  </div>
+
+  <audio id="metal-sound" src="https://cdn.pixabay.com/audio/2021/09/06/audio_58cbebdb42.mp3"></audio>
+
+  <script>
+    function playSound() {
+      const sound = document.getElementById("metal-sound");
+      sound.currentTime = 0;
+      sound.play();
+    }
+  </script>
+</body>
+</html>
