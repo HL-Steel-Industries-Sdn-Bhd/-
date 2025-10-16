@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>波动铁片菜单（可播放版）</title>
+<title>波动铁片菜单（有声音）</title>
 <style>
   body {
     background: radial-gradient(circle at center, #111, #000);
@@ -13,6 +13,7 @@
     align-items: center;
     font-family: "Orbitron", sans-serif;
     overflow: hidden;
+    color: #fff;
   }
 
   .menu {
@@ -47,6 +48,13 @@
     75% { transform: scale(1.09) rotateX(3deg); }
     100% { transform: scale(1.1) rotateX(0deg); }
   }
+
+  .hint {
+    position: absolute;
+    bottom: 30px;
+    font-size: 14px;
+    opacity: 0.6;
+  }
 </style>
 </head>
 <body>
@@ -56,22 +64,27 @@
     <div class="btn">退出游戏</div>
   </div>
 
+  <div class="hint">🔊 点击任意处启用音效</div>
+
+  <!-- ✅ 替换为可播放音源 -->
   <audio id="hover-sound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_1b231d9d19.mp3?filename=metal-click-1.mp3"></audio>
   <audio id="click-sound" src="https://cdn.pixabay.com/download/audio/2021/09/30/audio_d80b66bcd9.mp3?filename=metal-hit-impact.mp3"></audio>
 
   <script>
     const hoverSound = document.getElementById("hover-sound");
     const clickSound = document.getElementById("click-sound");
-
+    const hint = document.querySelector(".hint");
     let audioEnabled = false;
 
-    // 第一次点击激活音频权限
+    // 首次点击激活声音
     document.body.addEventListener("click", () => {
       if (!audioEnabled) {
         audioEnabled = true;
-        hoverSound.play().catch(() => {});
-        hoverSound.pause();
-        hoverSound.currentTime = 0;
+        hoverSound.play().then(() => {
+          hoverSound.pause();
+          hoverSound.currentTime = 0;
+          hint.style.display = "none";
+        }).catch(err => console.log(err));
       }
     });
 
@@ -93,6 +106,7 @@
   </script>
 </body>
 </html>
+
 
 
 
